@@ -15,7 +15,7 @@ public class Localization
                 {ModLanguage.Chinese, "诅咒卷轴"}
             },
             new Dictionary<ModLanguage, string>() {
-                {ModLanguage.English, "A scroll that transfers a curse from one item to another."},
+                {ModLanguage.English, "A scroll that ~lg~transfers~/~ a ~cursed~curse~/~ from one item to another."},
                 {ModLanguage.Chinese, "一种可以将~cursed~诅咒~/~从一个物品~lg~转移~/~到另一个物品的卷轴。"}
             },
             new Dictionary<ModLanguage, string>() {

@@ -68,7 +68,8 @@ public class CurseScroll : Mod
         );
 
         o_inv_scroll_curse.ApplyEvent(ModFiles,
-            new MslEvent("gml_Object_o_inv_scroll_curse_Create_0.gml", EventType.Create, 0)
+            new MslEvent("gml_Object_o_inv_scroll_curse_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_inv_scroll_curse_Alarm_0.gml", EventType.Alarm, 0)
         );
 
         UndertaleGameObject o_loot_scroll_curse = Msl.AddObject(
@@ -91,6 +92,16 @@ public class CurseScroll : Mod
             .MatchFrom("gold_k = irandom_range(1000, 1500)")
             .InsertAbove("ds_list_add(selling_loot_object, o_inv_scroll_curse, 25)")
             .Save();
+
+        Msl.InjectTableConsumableParameters(
+            metaGroup: Msl.ConsumParamMetaGroup.MAPSSCROLLSBOOKS,
+            id: "scroll_curse",
+            Cat: Msl.ConsumParamCategory.scroll,
+            Material: Msl.ConsumParamMaterial.paper,
+            Weight: Msl.ConsumParamWeight.Light,
+            tags: Msl.ConsumParamTags.special,
+            Price: 1000
+        );
 
         Localization.ItemsPatching();
 

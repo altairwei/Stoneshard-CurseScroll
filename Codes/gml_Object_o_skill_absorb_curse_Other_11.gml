@@ -25,13 +25,10 @@ if (_success && _curse_list != noone)
         scr_actionsLog("useItem", [scr_id_get_name(o_player), log_text, ds_map_find_value(data, "Name")])
         sh_diss = 200
 
+        // Absorb the curse from the existed item
         curse_list = __dsDebuggerListCreate()
-        for (var i = 0; i < ds_list_size(_curse_list); i++) {
-            var item = ds_list_find_value(_curse_list, i)
-            ds_list_add(curse_list, item)
-        }
-
-        ds_map_replace_list(data, "Curse", curse_list)
+        ds_list_copy(curse_list, _curse_list)
+        ds_map_add_list(data, "Curse", curse_list)
         skill = o_skill_transfer_curse
 
         ds_map_replace(data, "quality", (5 << 0))
