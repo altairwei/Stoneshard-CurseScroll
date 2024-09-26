@@ -17,22 +17,7 @@ public class CurseScroll : Mod
 
     public override void PatchMod()
     {
-        // Absorb curse from an existed item
-        UndertaleGameObject o_skill_absorb_curse = Msl.AddObject(
-            name: "o_skill_absorb_curse",
-            spriteName: "sprite1",
-            parentName: "o_weapon_skills",
-            isVisible: true,
-            isPersistent: false,
-            isAwake: true,
-            collisionShapeFlags: CollisionShapeFlags.Circle
-        );
-
-        o_skill_absorb_curse.ApplyEvent(ModFiles,
-            new MslEvent("gml_Object_o_skill_absorb_curse_Alarm_0.gml", EventType.Alarm, 0),
-            new MslEvent("gml_Object_o_skill_absorb_curse_Other_20.gml", EventType.Other, 10),
-            new MslEvent("gml_Object_o_skill_absorb_curse_Other_11.gml", EventType.Other, 1)
-        );
+        Msl.AddFunction(ModFiles.GetCode("mod_weapon_apply_curse.gml"), "mod_weapon_apply_curse");
 
         // Transfer curse to new item
 
@@ -48,8 +33,26 @@ public class CurseScroll : Mod
 
         o_skill_transfer_curse.ApplyEvent(ModFiles,
             new MslEvent("gml_Object_o_skill_transfer_curse_Alarm_0.gml", EventType.Alarm, 0),
-            new MslEvent("gml_Object_o_skill_transfer_curse_Other_20.gml", EventType.Other, 10),
-            new MslEvent("gml_Object_o_skill_transfer_curse_Other_11.gml", EventType.Other, 1)
+            new MslEvent("gml_Object_o_skill_transfer_curse_Other_11.gml", EventType.Other, 11),
+            new MslEvent("gml_Object_o_skill_transfer_curse_Other_20.gml", EventType.Other, 20)
+        );
+
+        // Absorb curse from an existed item
+        UndertaleGameObject o_skill_absorb_curse = Msl.AddObject(
+            name: "o_skill_absorb_curse",
+            spriteName: "sprite1",
+            parentName: "o_weapon_skills",
+            isVisible: true,
+            isPersistent: false,
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        o_skill_absorb_curse.ApplyEvent(ModFiles,
+            new MslEvent("gml_Object_o_skill_absorb_curse_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_skill_absorb_curse_Alarm_0.gml", EventType.Alarm, 0),
+            new MslEvent("gml_Object_o_skill_absorb_curse_Other_11.gml", EventType.Other, 11),
+            new MslEvent("gml_Object_o_skill_absorb_curse_Other_20.gml", EventType.Other, 20)
         );
 
         // Create Curse Scroll
@@ -90,6 +93,12 @@ public class CurseScroll : Mod
             .Save();
 
         Localization.ItemsPatching();
+
+        // Path text color
+        Msl.LoadGML("gml_GlobalScript_scr_colorTextColorsMap")
+            .MatchFrom(@"        ds_map_add(global.colorTextMap, ""~c~"", make_colour_rgb(115, 192, 222))")
+            .InsertBelow(@"        ds_map_add(global.colorTextMap, ""~cursed~"", make_colour_rgb(130, 72, 88))")
+            .Save();
 
         // Delete Me!
         Msl.LoadGML("gml_Object_o_player_KeyPress_115") // F4

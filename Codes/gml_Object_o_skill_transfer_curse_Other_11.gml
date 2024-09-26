@@ -6,9 +6,11 @@ with (interact_id)
     if (image_alpha == 1)
     {
         // Apply curse to the item
+        var _eff = noone
+        with (other.parent)
+            _eff = curse_eff
 
-        total_destroy = true
-        instance_destroy()
+        mod_weapon_apply_curse(_eff)
 
         if inmouse
         {

@@ -16,7 +16,7 @@ public class Localization
             },
             new Dictionary<ModLanguage, string>() {
                 {ModLanguage.English, "A scroll that transfers a curse from one item to another."},
-                {ModLanguage.Chinese, "一种可以将~r~诅咒~/~从一个物品~lg~转移~/~到另一个物品的卷轴。"}
+                {ModLanguage.Chinese, "一种可以将~cursed~诅咒~/~从一个物品~lg~转移~/~到另一个物品的卷轴。"}
             },
             new Dictionary<ModLanguage, string>() {
                 {ModLanguage.English, "l'Owcrey has acquired several cursed items from you, and after much study he has finally figured out how the curse works. This scroll is able to absorb power from an existing cursed item, and can then transfer that power, along with the curse, into another item, however inevitably the original item will be completely broken into pieces. But it was undeniably a great invention!"},
