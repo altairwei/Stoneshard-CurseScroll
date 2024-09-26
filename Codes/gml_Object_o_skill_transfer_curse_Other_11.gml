@@ -8,7 +8,7 @@ with (interact_id)
         // Apply curse to the item
         var _eff = noone
         with (other.parent)
-            _eff = curse_eff
+            _eff = ds_list_find_value(curse_list, 1)
 
         mod_weapon_apply_curse(_eff)
 
