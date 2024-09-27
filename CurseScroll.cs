@@ -90,7 +90,74 @@ public class CurseScroll : Mod
 
         Msl.LoadGML("gml_Object_o_npc_enchanter_Create_0")
             .MatchFrom("gold_k = irandom_range(1000, 1500)")
-            .InsertAbove("ds_list_add(selling_loot_object, o_inv_scroll_curse, 25)")
+            .InsertAbove(@"
+if (scr_dialogue_complete(""cursescroll_ready_to_sell""))
+    ds_list_add(selling_loot_object, o_inv_scroll_curse, 25)")
+            .Save();
+
+        Msl.LoadGML("gml_GlobalScript_scr_trade_item")
+            .MatchFromUntil(
+                "                if (seller_inventory.object_index == o_trade_inventory)",
+                "                    audio_play_sound(snd_gui_item_sale, 4, 0)")
+            .InsertAbove(@"
+                    if (ds_map_find_value(data, ""is_cursed"") && seller_inventory.owner.object_index == o_npc_enchanter)
+                        with (seller_inventory.owner)
+                        {
+                            var _num = scr_dsMapFindValue(data, ""num_of_cursed_item"", 0)
+                            _num++
+                            ds_map_replace(data, ""num_of_cursed_item"", _num)
+                            if (_num == 3)
+                            {
+                                var _timestamp = scr_timeGetTimestamp()
+                                scr_npc_set_global_info(""make_curse_scroll_timestamp"", _timestamp)
+                            }
+                        }")
+            .Save();
+
+        Msl.LoadGML("gml_Object_o_npc_enchanter_Other_23")
+            .MatchFrom("event_inherited()")
+            .InsertAbove(@"
+var _timestamp = scr_npc_get_global_info(""make_curse_scroll_timestamp"")
+var _daysPassed = scr_timeGetPassed(_timestamp, ""days"")
+if (scr_dsMapFindValue(data, ""num_of_cursed_item"", 0) >= 3 && _daysPassed >= 1 && !scr_dialogue_complete(""cursescroll_ready_to_sell""))
+{
+    ori_dialog_id = dialog_id
+    dialog_id = de2_dialog_open(""willowinn_enchanter_curse_scroll.de2"")
+    topic = ""topicScroll""
+    scr_npc_start_dialog()
+}
+")
+            .Save();
+
+        Msl.AddFunction(
+            name: "scr_curseScroll_lowcreyUpdateInventory",
+            codeAsString: @"function scr_curseScroll_lowcreyUpdateInventory()
+{
+    with (o_npc_enchanter)
+    {
+        dialog_id = ori_dialog_id
+
+        is_execute = false
+        var _globalData = scr_globaltile_get(id_name, village_xy[0], village_xy[1])
+        ds_list_clear(ds_map_find_value(_globalData, ""trade_list""))
+        var _timestamp = scr_timeGetTimestamp()
+        scr_npc_set_global_info(""timestamp"", _timestamp)
+
+        ds_list_clear(selling_loot_object)
+        ds_list_add(selling_loot_object, o_inv_treatise_geo3, 20, o_inv_treatise_pyro3, 20, o_inv_treatise_electro3, 20, o_inv_treatise_magic3, 20, o_inv_scroll_curse, 20)
+    }
+
+    scr_dialogue_complete(""cursescroll_ready_to_sell"", true)
+    scr_trade_open()
+}");
+
+        // FIXME: work around for `self.every_stock_update()`
+        Msl.LoadAssemblyAsString("scr_curseScroll_lowcreyUpdateInventory")
+            .MatchFrom("call.i ds_list_add(argc=11)")
+            .InsertBelow(@"popz.v
+call.i @@This@@(argc=0)
+push.v builtin.every_stock_update
+callv.v 0")
             .Save();
 
         Msl.InjectTableConsumableParameters(
@@ -104,6 +171,7 @@ public class CurseScroll : Mod
         );
 
         Localization.ItemsPatching();
+        Localization.DialogLinesPatching();
 
         // Path text color
         Msl.LoadGML("gml_GlobalScript_scr_colorTextColorsMap")
