@@ -92,27 +92,16 @@ public class CurseScroll : Mod
             .MatchFrom("gold_k = irandom_range(1000, 1500)")
             .InsertAbove(@"
 if (scr_dialogue_complete(""cursescroll_ready_to_sell""))
-    ds_list_add(selling_loot_object, o_inv_scroll_curse, 25)")
+    ds_list_add(selling_loot_object, o_inv_scroll_curse, 25)
+Stock_Refill_Time = 48")
             .Save();
 
-        Msl.LoadGML("gml_GlobalScript_scr_trade_item")
-            .MatchFromUntil(
-                "                if (seller_inventory.object_index == o_trade_inventory)",
-                "                    audio_play_sound(snd_gui_item_sale, 4, 0)")
-            .InsertAbove(@"
-                    if (ds_map_find_value(data, ""is_cursed"") && seller_inventory.owner.object_index == o_npc_enchanter)
-                        with (seller_inventory.owner)
-                        {
-                            var _num = scr_dsMapFindValue(data, ""num_of_cursed_item"", 0)
-                            _num++
-                            ds_map_replace(data, ""num_of_cursed_item"", _num)
-                            if (_num == 3)
-                            {
-                                var _timestamp = scr_timeGetTimestamp()
-                                scr_npc_set_global_info(""make_curse_scroll_timestamp"", _timestamp)
-                            }
-                        }")
-            .Save();
+        UndertaleGameObject o_trade_inventory = Msl.GetObject("o_trade_inventory");
+        o_trade_inventory.ApplyEvent(ModFiles,
+        new MslEvent("gml_Object_o_trade_inventory_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_trade_inventory_Other_11.gml", EventType.Other, 11),
+            new MslEvent("gml_Object_o_trade_inventory_Destroy_0.gml", EventType.Destroy, 0)
+        );
 
         Msl.LoadGML("gml_Object_o_npc_enchanter_Other_23")
             .MatchFrom("event_inherited()")
@@ -122,7 +111,7 @@ var _daysPassed = scr_timeGetPassed(_timestamp, ""days"")
 if (scr_dsMapFindValue(data, ""num_of_cursed_item"", 0) >= 3 && _daysPassed >= 1 && !scr_dialogue_complete(""cursescroll_ready_to_sell""))
 {
     ori_dialog_id = dialog_id
-    dialog_id = de2_dialog_open(""willowinn_enchanter_curse_scroll.de2"")
+    dialog_id = de2_dialog_open(""curse_scroll_lowcrey.de2"")
     topic = ""topicScroll""
     scr_npc_start_dialog()
 }
@@ -167,7 +156,7 @@ callv.v 0")
             Material: Msl.ConsumParamMaterial.paper,
             Weight: Msl.ConsumParamWeight.Light,
             tags: Msl.ConsumParamTags.special,
-            Price: 1000
+            Price: 500
         );
 
         Localization.ItemsPatching();
