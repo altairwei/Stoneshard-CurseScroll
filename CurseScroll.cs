@@ -1,6 +1,9 @@
-﻿// Copyright (C)
+// Copyright (C)
 // See LICENSE file for extended copyright information.
 // This file is part of the repository from .
+
+using System;
+using System.IO;
 
 using ModShardLauncher;
 using ModShardLauncher.Mods;
@@ -69,7 +72,8 @@ public class CurseScroll : Mod
 
         o_inv_scroll_curse.ApplyEvent(ModFiles,
             new MslEvent("gml_Object_o_inv_scroll_curse_Create_0.gml", EventType.Create, 0),
-            new MslEvent("gml_Object_o_inv_scroll_curse_Alarm_0.gml", EventType.Alarm, 0)
+            new MslEvent("gml_Object_o_inv_scroll_curse_Alarm_0.gml", EventType.Alarm, 0),
+            new MslEvent("gml_Object_o_inv_scroll_curse_Other_17.gml", EventType.Other, 17)
         );
 
         UndertaleGameObject o_loot_scroll_curse = Msl.AddObject(
@@ -83,7 +87,8 @@ public class CurseScroll : Mod
         );
 
         o_loot_scroll_curse.ApplyEvent(ModFiles,
-            new MslEvent("gml_Object_o_loot_scroll_curse_Create_0.gml", EventType.Create, 0)
+            new MslEvent("gml_Object_o_loot_scroll_curse_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_loot_scroll_curse_Other_12.gml", EventType.Other, 12)
         );
 
         // Let l'Owcrey sell these scroll

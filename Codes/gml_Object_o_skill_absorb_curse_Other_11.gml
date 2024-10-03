@@ -33,6 +33,9 @@ if (_success && _curse_list != noone)
 
         ds_map_replace(data, "quality", (5 << 0))
         ds_map_replace(data, "is_cursed", true)
+        ds_map_replace(data, "Colour", make_colour_rgb(130, 72, 88))
+
+        // Refresh information of the scroll
         event_user(1)
         event_user(7)
     }
