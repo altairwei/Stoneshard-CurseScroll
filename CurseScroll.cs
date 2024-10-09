@@ -97,7 +97,7 @@ public class CurseScroll : Mod
             .MatchFrom("gold_k = irandom_range(1000, 1500)")
             .InsertAbove(@"
 if (scr_dialogue_complete(""cursescroll_ready_to_sell""))
-    ds_list_add(selling_loot_object, o_inv_scroll_curse, 25)
+    ds_list_add(selling_loot_object_persistence, o_inv_scroll_curse, 2)
 Stock_Refill_Time = 48")
             .Save();
 
@@ -137,8 +137,8 @@ if (scr_dsMapFindValue(data, ""num_of_cursed_item"", 0) >= 3 && _daysPassed >= 1
         var _timestamp = scr_timeGetTimestamp()
         scr_npc_set_global_info(""timestamp"", _timestamp)
 
-        ds_list_clear(selling_loot_object)
-        ds_list_add(selling_loot_object, o_inv_treatise_geo3, 20, o_inv_treatise_pyro3, 20, o_inv_treatise_electro3, 20, o_inv_treatise_magic3, 20, o_inv_scroll_curse, 20)
+        ds_list_clear(selling_loot_object_persistence)
+        ds_list_add(selling_loot_object_persistence, o_inv_scroll_curse, 2)
     }
 
     scr_dialogue_complete(""cursescroll_ready_to_sell"", true)
