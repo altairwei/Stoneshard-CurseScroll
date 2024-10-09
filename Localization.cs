@@ -19,8 +19,8 @@ public class Localization
                 {ModLanguage.Chinese, "一种可以将~cursed~诅咒~/~从一个物品~lg~转移~/~到另一个物品的卷轴。"}
             },
             new Dictionary<ModLanguage, string>() {
-                {ModLanguage.English, "l'Owcrey has acquired several cursed items from you, and after much study he has invented a scroll capable of transferring the curse."},
-                {ModLanguage.Chinese, "埃欧科里从你手里收购了好几件诅咒物品，经过潜心研究，他发明了一种能够转移诅咒的卷轴。"}
+                {ModLanguage.English, "This scroll can absorb the power from an existing cursed item and transfer both the power and the curse to another item. However, the original object will inevitably be reduced to dust."},
+                {ModLanguage.Chinese, "这种卷轴能够从已有的受诅咒物品中吸取力量，并将这种力量连同诅咒一起转移到另一个物品上。不过，原来的物品不可避免地会完全化为齑粉。"}
             }
         );
     }
@@ -31,7 +31,7 @@ public class Localization
             new LocalizationSentence(
                 "cursescroll_ready_to_intro",
                 new Dictionary<ModLanguage, string>() {
-                    {ModLanguage.English, "Ah, you're here! Those cursed items you sold me—I've studied them thoroughly, and I've made some significant progress recently. #I've crafted a scroll that can siphon the power from an existing cursed item and transfer both the power and the curse to another item. #However, the original object will inevitably be reduced to dust."},
+                    {ModLanguage.English, "Ah, you're here! Those cursed items you sold me—I've studied them thoroughly, and I've made some significant progress recently. #I've crafted a scroll that can absorb the power from an existing cursed item and transfer both the power and the curse to another item. #However, the original object will inevitably be reduced to dust."},
                     {ModLanguage.Chinese, "你来了！你卖给我的那些受诅咒物品，我仔细研究了一番，最近有了重大进展。#我制作了一种卷轴，能够从已有的受诅咒物品中吸取力量，并将这种力量连同诅咒一起转移到另一个物品上。#不过，原来的物品不可避免地会完全化为齑粉。"}
                 }
             ),
@@ -57,5 +57,61 @@ public class Localization
                 }
             )
         );
+    }
+
+    public static void CurseTextPatching()
+    {
+        List<string> idlist = new List<string>();
+        List<string> desclist = new List<string>();
+
+        string id = "Curse_of_Nihility";
+        string text_en = "Curse of Nihility";
+        string text_zh = "虚无诅咒";
+        idlist.Add($"{id};{text_en};{text_en};{text_zh};" + string.Concat(Enumerable.Repeat($"{text_en};", 11)));
+        desclist.Add($"{id};;;;;;;;;;;;;;;");
+
+        id = "Curse_of_Craze";
+        text_en = "Curse of Craze";
+        text_zh = "狂热诅咒";
+        idlist.Add($"{id};{text_en};{text_en};{text_zh};" + string.Concat(Enumerable.Repeat($"{text_en};", 11)));
+        desclist.Add($"{id};;;;;;;;;;;;;;;");
+
+        id = "Curse_of_Scabies";
+        text_en = "Curse of Scabies";
+        text_zh = "癞皮诅咒";
+        idlist.Add($"{id};{text_en};{text_en};{text_zh};" + string.Concat(Enumerable.Repeat($"{text_en};", 11)));
+        desclist.Add($"{id};;;;;;;;;;;;;;;");
+
+        id = "Curse_of_Blindness";
+        text_en = "Curse of Blindness";
+        text_zh = "目盲诅咒";
+        idlist.Add($"{id};{text_en};{text_en};{text_zh};" + string.Concat(Enumerable.Repeat($"{text_en};", 11)));
+        desclist.Add($"{id};;;;;;;;;;;;;;;");
+
+        id = "Curse_of_Wither";
+        text_en = "Curse of Wither";
+        text_zh = "干枯诅咒";
+        idlist.Add($"{id};{text_en};{text_en};{text_zh};" + string.Concat(Enumerable.Repeat($"{text_en};", 11)));
+        desclist.Add($"{id};;;;;;;;;;;;;;;");
+
+        id = "Curse_of_Wrath";
+        text_en = "Curse of Wrath";
+        text_zh = "暴怒诅咒";
+        idlist.Add($"{id};{text_en};{text_en};{text_zh};" + string.Concat(Enumerable.Repeat($"{text_en};", 11)));
+        desclist.Add($"{id};;;;;;;;;;;;;;;");
+
+        id = "Curse_of_Evermind";
+        text_en = "Curse of Evermind";
+        text_zh = "迷醉诅咒";
+        idlist.Add($"{id};{text_en};{text_en};{text_zh};" + string.Concat(Enumerable.Repeat($"{text_en};", 11)));
+        desclist.Add($"{id};;;;;;;;;;;;;;;");
+
+        string curse_end = ";" + string.Concat(Enumerable.Repeat("curse_name_end;", 14));
+        string desc_end = ";" + string.Concat(Enumerable.Repeat("curse_desc_end;", 14));
+
+        List<string> curse_table = ModLoader.GetTable("gml_GlobalScript_table_Curse");
+        curse_table.InsertRange(curse_table.IndexOf(curse_end), idlist);
+        curse_table.InsertRange(curse_table.IndexOf(desc_end), desclist);
+        ModLoader.SetTable(curse_table, "gml_GlobalScript_table_Curse");
     }
 }

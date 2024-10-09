@@ -1,4 +1,4 @@
-// Copyright (C)
+﻿// Copyright (C)
 // See LICENSE file for extended copyright information.
 // This file is part of the repository from .
 
@@ -164,8 +164,111 @@ callv.v 0")
             Price: 500
         );
 
+        // Add Several Curse Scroll to Witch's Container
+
+        Msl.LoadGML("gml_Object_o_whitchousecontainer02_Other_10")
+            .MatchFrom("            scr_inventory_add_item(scr_get_scroll(0))")
+            .InsertBelow(@"
+        repeat random_range(1, 3)
+            scr_inventory_add_item(o_inv_scroll_curse)")
+            .Save();
+
+        // Let some enemies drop cure scrolls
+
+        // Msl.AddNewEvent("o_skeleton_monk", "event_inherited()\nscr_loot(o_loot_scroll_curse, x, y, 1)", EventType.Destroy, 0);
+        // Msl.AddNewEvent("o_skeleton_priest", "event_inherited()\nscr_loot(o_loot_scroll_curse, x, y, 2)", EventType.Destroy, 0);
+        // Msl.AddNewEvent("o_ghast", "event_inherited()\nscr_loot(o_loot_scroll_curse, x, y, 3)", EventType.Destroy, 0);
+        // Msl.AddNewEvent("o_skeleton_highpriest", "event_inherited()\nscr_loot(o_loot_scroll_curse, x, y, 3)", EventType.Destroy, 0);
+        // Msl.AddNewEvent("o_ghast_accursed", "event_inherited()\nscr_loot(o_loot_scroll_curse, x, y, 3)", EventType.Destroy, 0);
+        // Msl.AddNewEvent("o_ghast_elder", "event_inherited()\nscr_loot(o_loot_scroll_curse, x, y, 3)", EventType.Destroy, 0);
+
+        // FIXME: don't touch o_necromancer_boss which will be modified by Necromancy
+        // Msl.AddNewEvent("o_necromancer_boss", "event_inherited()\nscr_loot(o_loot_scroll_curse, x, y, 2)", EventType.Destroy, 0);
+        // Msl.AddNewEvent("o_necromancer_boss_staff", "event_inherited()\nscr_loot(o_loot_scroll_curse, x, y, 2.5)", EventType.Destroy, 0);
+        // Msl.AddNewEvent("o_necromancer_ritualist", "event_inherited()\nscr_loot(o_loot_scroll_curse, x, y, 3)", EventType.Destroy, 0);
+        // Msl.AddNewEvent("o_necromancer_wraithbinder", "event_inherited()\nscr_loot(o_loot_scroll_curse, x, y, 3)", EventType.Destroy, 0);
+
+        Msl.LoadGML("gml_Object_o_proselyte_adept_Destroy_0")
+            .MatchAll()
+            .InsertBelow("scr_loot(scr_get_scroll(1), x, y, 1)")
+            .Save();
+
+        Msl.LoadGML("gml_Object_o_proselyte_toller_Destroy_0")
+            .MatchAll()
+            .InsertBelow("scr_loot(scr_get_scroll(1), x, y, 1)")
+            .Save();
+
+        Msl.LoadGML("gml_Object_o_proselyte_hierarch_Destroy_0")
+            .MatchAll()
+            .InsertBelow("scr_loot(o_loot_scroll_curse, x, y, 2)")
+            .Save();
+
+        Msl.LoadGML("gml_Object_o_proselyte_apostate_Destroy_0")
+            .MatchAll()
+            .InsertBelow("scr_loot(o_loot_scroll_curse, x, y, 2.5)")
+            .Save();
+
+        Msl.LoadGML("gml_Object_o_proselyte_abomination_Destroy_0")
+            .MatchAll()
+            .InsertBelow("scr_loot(o_loot_scroll_curse, x, y, 2.5)")
+            .Save();
+
+        Msl.LoadGML("gml_Object_o_proselyte_matriarch_Destroy_0")
+            .MatchAll()
+            .InsertBelow("scr_loot(o_loot_scroll_curse, x, y, 2.5)")
+            .Save();
+
+        Msl.LoadGML("gml_GlobalScript_scr_loot_cabinetCatacombs")
+            .MatchFrom("                    scr_inventory_add_item(choose(3087, 3086, 3085))")
+            .ReplaceBy(@"                {
+                    if scr_chance_value(10)
+                        scr_inventory_add_item(o_inv_scroll_curse)
+                    else
+                        scr_inventory_add_item(choose(o_inv_scroll_disenchant, o_inv_scroll_enchant, o_inv_scroll_identification))
+                }")
+            .MatchFrom("                    scr_inventory_add_item(choose(3087, 3086, 3085))")
+            .ReplaceBy(@"                {
+                    if scr_chance_value(10)
+                        scr_inventory_add_item(o_inv_scroll_curse)
+                    else
+                        scr_inventory_add_item(choose(o_inv_scroll_disenchant, o_inv_scroll_enchant, o_inv_scroll_identification))
+                }")
+            .MatchFrom("                    scr_inventory_add_item(choose(3087, 3086, 3085))")
+            .ReplaceBy(@"                {
+                    if scr_chance_value(10)
+                        scr_inventory_add_item(o_inv_scroll_curse)
+                    else
+                        scr_inventory_add_item(choose(o_inv_scroll_disenchant, o_inv_scroll_enchant, o_inv_scroll_identification))
+                }")
+            .MatchFrom("                    scr_inventory_add_item(choose(3087, 3086, 3085))")
+            .ReplaceBy(@"                {
+                    if scr_chance_value(10)
+                        scr_inventory_add_item(o_inv_scroll_curse)
+                    else
+                        scr_inventory_add_item(choose(o_inv_scroll_disenchant, o_inv_scroll_enchant, o_inv_scroll_identification))
+                }")
+            .MatchFrom("                    scr_inventory_add_item(choose(3087, 3086, 3085))")
+            .ReplaceBy(@"                {
+                    if scr_chance_value(10)
+                        scr_inventory_add_item(o_inv_scroll_curse)
+                    else
+                        scr_inventory_add_item(choose(o_inv_scroll_disenchant, o_inv_scroll_enchant, o_inv_scroll_identification))
+                }")
+            .Save();
+
+        Msl.LoadGML("gml_GlobalScript_scr_loot_chestRemoteCatacombs")
+            .MatchFrom("        scr_inventory_add_item(choose(3050, 3086))")
+            .InsertBelow(@"    if scr_chance_value(10)
+        scr_inventory_add_item(o_inv_scroll_curse)")
+            .Peek()
+            .Save();
+
+        // Insert Localization and Curse List
+
         Localization.ItemsPatching();
         Localization.DialogLinesPatching();
+        Localization.CurseTextPatching();
+        CurseList.CurseFunctionPatching();
 
         // Path text color
         Msl.LoadGML("gml_GlobalScript_scr_colorTextColorsMap")
@@ -178,5 +281,19 @@ callv.v 0")
             .MatchAll()
             .InsertBelow(ModFiles, "generate_cursed_item.gml")
             .Save();
+    }
+
+    private static void ExportTable(string table)
+    {
+        DirectoryInfo dir = new("ModSources/CurseScroll/tmp");
+        if (!dir.Exists) dir.Create();
+        List<string>? lines = ModLoader.GetTable(table);
+        if (lines != null)
+        {
+            File.WriteAllLines(
+                Path.Join(dir.FullName, Path.DirectorySeparatorChar.ToString(), table + ".tsv"),
+                lines.Select(x => string.Join('\t', x.Split(';')))
+            );
+        }
     }
 }
