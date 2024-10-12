@@ -58,8 +58,8 @@ public class CurseList
 }");
         
         Msl.AddFunction(
-            name: "gml_GlobalScript_Curse_of_Wither",
-            codeAsString: @"function Curse_of_Wither()
+            name: "gml_GlobalScript_Curse_of_Thirsty",
+            codeAsString: @"function Curse_of_Thirsty()
 {
     if (argument_count == 0)
     {
@@ -110,7 +110,7 @@ public class CurseList
         AddScript("Curse_of_Craze");
         AddScript("Curse_of_Scabies");
         AddScript("Curse_of_Blindness");
-        AddScript("Curse_of_Wither");
+        AddScript("Curse_of_Thirsty");
         AddScript("Curse_of_Wrath");
         AddScript("Curse_of_Evermind");
 
@@ -119,7 +119,7 @@ asset_add_tags(Curse_of_Nihility, [""curse_eff"", ""Weapon"", ""Jewelry"", ""Arm
 asset_add_tags(Curse_of_Craze, [""curse_eff"", ""Weapon"", ""Jewelry"", ""Armor""], asset_script)
 asset_add_tags(Curse_of_Scabies, [""curse_eff"", ""Armor""], asset_script)
 asset_add_tags(Curse_of_Blindness, [""curse_eff"", ""Armor""], asset_script)
-asset_add_tags(Curse_of_Wither, [""curse_eff"", ""Weapon"", ""Jewelry"", ""Armor""], asset_script)
+asset_add_tags(Curse_of_Thirsty, [""curse_eff"", ""Weapon"", ""Jewelry"", ""Armor""], asset_script)
 asset_add_tags(Curse_of_Wrath, [""curse_eff"", ""Weapon"", ""Jewelry"", ""Armor""], asset_script)
 asset_add_tags(Curse_of_Evermind, [""curse_eff"", ""Weapon"", ""Jewelry"", ""Armor""], asset_script)
 ";

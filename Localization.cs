@@ -88,9 +88,9 @@ public class Localization
         idlist.Add($"{id};{text_en};{text_en};{text_zh};" + string.Concat(Enumerable.Repeat($"{text_en};", 11)));
         desclist.Add($"{id};;;;;;;;;;;;;;;");
 
-        id = "Curse_of_Wither";
-        text_en = "Curse of Wither";
-        text_zh = "干枯诅咒";
+        id = "Curse_of_Thirsty";
+        text_en = "Curse of Thirsty";
+        text_zh = "干渴诅咒";
         idlist.Add($"{id};{text_en};{text_en};{text_zh};" + string.Concat(Enumerable.Repeat($"{text_en};", 11)));
         desclist.Add($"{id};;;;;;;;;;;;;;;");
 
