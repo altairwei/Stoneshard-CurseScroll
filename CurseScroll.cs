@@ -22,6 +22,13 @@ public class CurseScroll : Mod
     {
         Msl.AddFunction(ModFiles.GetCode("mod_weapon_apply_curse.gml"), "mod_weapon_apply_curse");
 
+        Msl.AddMenu(
+            "Curse Scroll",
+            new UIComponent(
+                name: "Enable new curses", associatedGlobal: "add_new_curses",
+                UIComponentType.CheckBox, 0, true)
+        );
+
         // Transfer curse to new item
 
         UndertaleGameObject o_skill_transfer_curse = Msl.AddObject(

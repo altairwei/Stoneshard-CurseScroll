@@ -3,7 +3,7 @@
 * The Curse Scroll has been added, capable of transferring curses from one item to another, but the original item will be destroyed.
 * When you sell more than 3 cursed items to l'Owcrey, he will learn how to make the Curse Scroll and sell it, which will be refreshed once every 48 hours.
 * There is a small chance that the Curse Scroll can be found in the bookshelf of the Catacombs, and the enemies and bosses there have a small chance of dropping the Curse Scroll.
-* Several new curses have been added, see the below list.
+* Several new curses have been added (can be disabled), see the list below.
 
 ## New Curses
 

@@ -114,18 +114,30 @@ public class CurseList
         AddScript("Curse_of_Wrath");
         AddScript("Curse_of_Evermind");
 
-        string txtCurseTags = $@"
-asset_add_tags(Curse_of_Nihility, [""curse_eff"", ""Weapon"", ""Jewelry"", ""Armor""], asset_script)
-asset_add_tags(Curse_of_Craze, [""curse_eff"", ""Weapon"", ""Jewelry"", ""Armor""], asset_script)
-asset_add_tags(Curse_of_Scabies, [""curse_eff"", ""Armor""], asset_script)
-asset_add_tags(Curse_of_Blindness, [""curse_eff"", ""Armor""], asset_script)
-asset_add_tags(Curse_of_Thirsty, [""curse_eff"", ""Weapon"", ""Jewelry"", ""Armor""], asset_script)
-asset_add_tags(Curse_of_Wrath, [""curse_eff"", ""Weapon"", ""Jewelry"", ""Armor""], asset_script)
-asset_add_tags(Curse_of_Evermind, [""curse_eff"", ""Weapon"", ""Jewelry"", ""Armor""], asset_script)
-";
+        string txtCurseTags = @"
+if (global.add_new_curses)
+{
+    asset_add_tags(Curse_of_Nihility, [""curse_eff"", ""Weapon"", ""Jewelry"", ""Armor""], asset_script)
+    asset_add_tags(Curse_of_Craze, [""curse_eff"", ""Weapon"", ""Jewelry"", ""Armor""], asset_script)
+    asset_add_tags(Curse_of_Scabies, [""curse_eff"", ""Armor""], asset_script)
+    asset_add_tags(Curse_of_Blindness, [""curse_eff"", ""Armor""], asset_script)
+    asset_add_tags(Curse_of_Thirsty, [""curse_eff"", ""Weapon"", ""Jewelry"", ""Armor""], asset_script)
+    asset_add_tags(Curse_of_Wrath, [""curse_eff"", ""Weapon"", ""Jewelry"", ""Armor""], asset_script)
+    asset_add_tags(Curse_of_Evermind, [""curse_eff"", ""Weapon"", ""Jewelry"", ""Armor""], asset_script)
+}
+else
+{
+    asset_clear_tags(Curse_of_Nihility, asset_script)
+    asset_clear_tags(Curse_of_Craze, asset_script)
+    asset_clear_tags(Curse_of_Scabies, asset_script)
+    asset_clear_tags(Curse_of_Blindness, asset_script)
+    asset_clear_tags(Curse_of_Thirsty, asset_script)
+    asset_clear_tags(Curse_of_Wrath, asset_script)
+    asset_clear_tags(Curse_of_Evermind, asset_script)
+}";
 
-        UndertaleGameObject ob = Msl.AddObject("o_curse_scrull_initializer", isPersistent:true);
-        Msl.AddNewEvent(ob, txtCurseTags, EventType.Create, 0);
+        UndertaleGameObject ob = Msl.AddObject("o_curse_scrull_initializer", isPersistent: true);
+        Msl.AddNewEvent(ob, txtCurseTags, EventType.Other, 5);
         // initializer in START room
         UndertaleRoom room = Msl.GetRoom("START");
         room.AddGameObject("Instances", ob);
