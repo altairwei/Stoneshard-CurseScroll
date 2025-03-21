@@ -1,5 +1,5 @@
 event_inherited()
-curse_list = scr_dsMapFindValue(data, "Curse", noone)
+curse_list = ds_map_find_value_ext(data, "Curse", noone)
 if (curse_list != noone)
     skill = o_skill_transfer_curse
 else

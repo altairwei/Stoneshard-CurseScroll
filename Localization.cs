@@ -36,13 +36,6 @@ public class Localization
                 }
             ),
             new LocalizationSentence(
-                "cursescroll_ready_to_intro_pc",
-                new Dictionary<ModLanguage, string>() {
-                    {ModLanguage.English, "I can't believe you've mastered the mystical arts of witches! It's truly remarkable."},
-                    {ModLanguage.Chinese, "你竟然掌握了女巫的神秘技艺！真是了不起。"}
-                }
-            ),
-            new LocalizationSentence(
                 "cursescroll_ready_to_sell",
                 new Dictionary<ModLanguage, string>() {
                     {ModLanguage.English, "If you're interested in such a scroll, I could supply a limited amount, though the price will be steep. The materials required for its creation are exceedingly rare, you see."},
@@ -55,6 +48,13 @@ public class Localization
                     {ModLanguage.English, "OK! I'll take as much as you have!"},
                     {ModLanguage.Chinese, "行！你有多少我要多少！"}
                 }
+            ),
+            new LocalizationSentence(
+                "cursescroll_ready_to_sell_refuse_pc",
+                new Dictionary<ModLanguage, string>() {
+                    {ModLanguage.English, "I don't need this stuff."},
+                    {ModLanguage.Chinese, "我不需要这些玩意儿。"}
+                }
             )
         );
     }
@@ -62,56 +62,46 @@ public class Localization
     public static void CurseTextPatching()
     {
         List<string> idlist = new List<string>();
-        List<string> desclist = new List<string>();
 
         string id = "Curse_of_Nihility";
         string text_en = "Curse of Nihility";
         string text_zh = "虚无诅咒";
         idlist.Add($"{id};{text_en};{text_en};{text_zh};" + string.Concat(Enumerable.Repeat($"{text_en};", 11)));
-        desclist.Add($"{id};;;;;;;;;;;;;;;");
 
         id = "Curse_of_Craze";
         text_en = "Curse of Craze";
         text_zh = "狂热诅咒";
         idlist.Add($"{id};{text_en};{text_en};{text_zh};" + string.Concat(Enumerable.Repeat($"{text_en};", 11)));
-        desclist.Add($"{id};;;;;;;;;;;;;;;");
 
         id = "Curse_of_Scabies";
         text_en = "Curse of Scabies";
         text_zh = "癞皮诅咒";
         idlist.Add($"{id};{text_en};{text_en};{text_zh};" + string.Concat(Enumerable.Repeat($"{text_en};", 11)));
-        desclist.Add($"{id};;;;;;;;;;;;;;;");
 
         id = "Curse_of_Blindness";
         text_en = "Curse of Blindness";
         text_zh = "目盲诅咒";
         idlist.Add($"{id};{text_en};{text_en};{text_zh};" + string.Concat(Enumerable.Repeat($"{text_en};", 11)));
-        desclist.Add($"{id};;;;;;;;;;;;;;;");
 
         id = "Curse_of_Thirsty";
         text_en = "Curse of Thirsty";
         text_zh = "干渴诅咒";
         idlist.Add($"{id};{text_en};{text_en};{text_zh};" + string.Concat(Enumerable.Repeat($"{text_en};", 11)));
-        desclist.Add($"{id};;;;;;;;;;;;;;;");
 
         id = "Curse_of_Wrath";
         text_en = "Curse of Wrath";
         text_zh = "暴怒诅咒";
         idlist.Add($"{id};{text_en};{text_en};{text_zh};" + string.Concat(Enumerable.Repeat($"{text_en};", 11)));
-        desclist.Add($"{id};;;;;;;;;;;;;;;");
 
         id = "Curse_of_Evermind";
         text_en = "Curse of Evermind";
         text_zh = "迷醉诅咒";
         idlist.Add($"{id};{text_en};{text_en};{text_zh};" + string.Concat(Enumerable.Repeat($"{text_en};", 11)));
-        desclist.Add($"{id};;;;;;;;;;;;;;;");
 
         string curse_end = ";" + string.Concat(Enumerable.Repeat("curse_name_end;", 14));
-        string desc_end = ";" + string.Concat(Enumerable.Repeat("curse_desc_end;", 14));
 
-        List<string> curse_table = ModLoader.GetTable("gml_GlobalScript_table_Curse");
+        List<string> curse_table = ModLoader.GetTable("gml_GlobalScript_table_curses");
         curse_table.InsertRange(curse_table.IndexOf(curse_end), idlist);
-        curse_table.InsertRange(curse_table.IndexOf(desc_end), desclist);
-        ModLoader.SetTable(curse_table, "gml_GlobalScript_table_Curse");
+        ModLoader.SetTable(curse_table, "gml_GlobalScript_table_curses");
     }
 }

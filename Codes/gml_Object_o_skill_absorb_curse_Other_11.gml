@@ -7,7 +7,7 @@ with (interact_id)
     if (image_alpha == 1)
     {
         // Absorb the curse then destroy the item
-        _curse_list = scr_dsMapFindValue(data, "Curse", noone)
+        _curse_list = ds_map_find_value_ext(data, "Curse", noone)
 
         if inmouse
         {

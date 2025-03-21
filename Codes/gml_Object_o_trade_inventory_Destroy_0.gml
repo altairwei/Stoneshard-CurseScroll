@@ -1,13 +1,13 @@
-if (owner.object_index == o_npc_enchanter)
+if (owner.object_index == o_npc_lowcrey)
 {
     var _current_num_of_cursed_item = 0
     for (var i = 0; i < ds_list_size(loot_list); i++)
     {
-        if (owner.object_index == o_npc_enchanter)
+        if (owner.object_index == o_npc_lowcrey)
         {
             with (ds_list_find_value(loot_list, i))
             {
-                if (scr_dsMapFindValue(data, "is_cursed", false))
+                if (ds_map_find_value_ext(data, "is_cursed", false))
                     _current_num_of_cursed_item++
             }
         }
@@ -18,7 +18,7 @@ if (owner.object_index == o_npc_enchanter)
     {
         if (_current_num_of_cursed_item > _num_of_cursed_item)
         {
-            var _num = scr_dsMapFindValue(data, "num_of_cursed_item", 0)
+            var _num = ds_map_find_value_ext(data, "num_of_cursed_item", 0)
             var _new_num = _num + (_current_num_of_cursed_item - _num_of_cursed_item)
             ds_map_replace(data, "num_of_cursed_item", _new_num)
             if (_num < 3 && _new_num >= 3)
@@ -29,5 +29,3 @@ if (owner.object_index == o_npc_enchanter)
         }
     }
 }
-
-event_inherited()

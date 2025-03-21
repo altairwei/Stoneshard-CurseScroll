@@ -2,14 +2,14 @@ function mod_weapon_apply_curse()
 {
     var _eff = argument0
 
-    var name = scr_dsMapFindValue(data, "idName", "N/A")
-    var dur = scr_dsMapFindValue(data, "Duration", noone)
-    var max_dur = scr_dsMapFindValue(data, "MaxDuration", noone)
-    var _is_quest = scr_dsMapFindValue(data, "is_quest_item", noone)
-    var _has_owner = scr_dsMapFindValue(data, "HasOwner", noone)
-    var _town = scr_dsMapFindValue(data, "Town", "N/A")
-    var _stolen_days = scr_dsMapFindValue(data, "Stolen_Days", noone)
-    var _stolen_days_stamp = scr_dsMapFindValue(data, "Stolen_Days_Timestamp", noone)
+    var name = ds_map_find_value_ext(data, "idName", "N/A")
+    var dur = ds_map_find_value_ext(data, "Duration", noone)
+    var max_dur = ds_map_find_value_ext(data, "MaxDuration", noone)
+    var _is_quest = ds_map_find_value_ext(data, "is_quest_item", noone)
+    var _has_owner = ds_map_find_value_ext(data, "HasOwner", noone)
+    var _town = ds_map_find_value_ext(data, "Town", "N/A")
+    var _stolen_days = ds_map_find_value_ext(data, "Stolen_Days", noone)
+    var _stolen_days_stamp = ds_map_find_value_ext(data, "Stolen_Days_Timestamp", noone)
     __dsDebuggerMapDestroy(data)
 
     data = noone
@@ -35,51 +35,51 @@ function mod_weapon_apply_curse()
     common = __dsDebuggerMapCreate()
     rare = __dsDebuggerMapCreate()
     effect = __dsDebuggerMapCreate()
-    scr_weapon_prefix_generation("Lifesteal", "Weapon", 2, 10)
-    scr_weapon_prefix_generation("Manasteal", "Weapon", 2, 5)
-    scr_weapon_prefix_generation("Bleeding_Chance", "Weapon", 2, 10)
-    scr_weapon_prefix_generation("Daze_Chance", "Weapon", 2, 10)
-    scr_weapon_prefix_generation("Stun_Chance", "Weapon", 2, 5)
-    scr_weapon_prefix_generation("Knockback_Chance", "Weapon", 2, 10)
-    scr_weapon_prefix_generation("Fire_Damage", "Weapon", 2, power((1 + LVL / 10), 0.5))
-    scr_weapon_prefix_generation("Frost_Damage", "Weapon", 2, power((1 + LVL / 10), 0.5))
-    scr_weapon_prefix_generation("Poison_Damage", "Weapon", 2, power((1 + LVL / 10), 0.5))
-    scr_weapon_prefix_generation("Shock_Damage", "Weapon", 2, power((1 + LVL / 10), 0.5))
-    scr_weapon_prefix_generation("Caustic_Damage", "Weapon", 2, power((1 + LVL / 10), 0.5))
-    scr_weapon_prefix_generation("HP", "Armor", 2, 4)
-    scr_weapon_prefix_generation("MP", "Armor", 2, 4)
-    scr_weapon_prefix_generation("Health_Restoration", "Armor", 2, 4)
-    scr_weapon_prefix_generation("MP_Restoration", "Armor", 2, 2)
-    scr_weapon_prefix_generation("Weapon_Damage", "Weapon", 2, 5)
-    scr_weapon_prefix_generation("Armor_Damage", "Weapon", 2, 15)
-    scr_weapon_prefix_generation("Bodypart_Damage", "Weapon", 2, 10)
-    scr_weapon_prefix_generation("Magic_Power", "Weapon", 2, 5)
-    scr_weapon_prefix_generation("Skills_Energy_Cost", "Weapon", 2, -5)
-    scr_weapon_prefix_generation("Spells_Energy_Cost", "Weapon", 2, -5)
-    scr_weapon_prefix_generation("Cooldown_Reduction", "Weapon", 2, -5)
-    scr_weapon_prefix_generation("PRR", "Weapon", 1, 5)
-    scr_weapon_prefix_generation("Block_Power", "all", 1, (2 + LVL / 6))
-    scr_weapon_prefix_generation("EVS", "Armor", 1, 3)
-    scr_weapon_prefix_generation("CTA", "Weapon", 1, 5)
-    scr_weapon_prefix_generation("Hit_Chance", "Weapon", 1, 3)
-    scr_weapon_prefix_generation("CRT", "Weapon", 1, 3)
-    scr_weapon_prefix_generation("CRTD", "Weapon", 1, 10)
-    scr_weapon_prefix_generation("FMB", "Weapon", 1, -3)
-    scr_weapon_prefix_generation("Armor_Piercing", "Weapon", 1, 5)
-    scr_weapon_prefix_generation("Fortitude", "Armor", 1, 10)
-    scr_weapon_prefix_generation("Healing_Received", "Armor", 1, 15)
-    scr_weapon_prefix_generation("Slashing_Resistance", "Armor", 1, 10)
-    scr_weapon_prefix_generation("Piercing_Resistance", "Armor", 1, 10)
-    scr_weapon_prefix_generation("Blunt_Resistance", "Armor", 1, 10)
-    scr_weapon_prefix_generation("Rending_Resistance", "Armor", 1, 10)
-    scr_weapon_prefix_generation("Unholy_Resistance", "Armor", 1, 10)
-    scr_weapon_prefix_generation("Stun_Resistance", "Armor", 1, 10)
-    scr_weapon_prefix_generation("Knockback_Resistance", "Armor", 1, 10)
-    scr_weapon_prefix_generation("Bleeding_Resistance", "Armor", 1, 10)
-    scr_weapon_prefix_generation("Physical_Resistance", "Armor", 1, 5)
-    scr_weapon_prefix_generation("Nature_Resistance", "Armor", 1, 10)
-    scr_weapon_prefix_generation("Magic_Resistance", "Armor", 1, 10)
-    scr_weapon_prefix_generation("Pain_Resistance", "Armor", 1, 10)
+    scr_weapon_prefix_generation("Lifesteal", "Weapon", 2, 5);
+    scr_weapon_prefix_generation("Manasteal", "Weapon", 2, 5);
+    scr_weapon_prefix_generation("Bleeding_Chance", "Weapon", 2, 5);
+    scr_weapon_prefix_generation("Daze_Chance", "Weapon", 2, 5);
+    scr_weapon_prefix_generation("Stun_Chance", "Weapon", 2, 5);
+    scr_weapon_prefix_generation("Knockback_Chance", "Weapon", 2, 5);
+    scr_weapon_prefix_generation("Fire_Damage", "Weapon", 2, 2);
+    scr_weapon_prefix_generation("Frost_Damage", "Weapon", 2, 1);
+    scr_weapon_prefix_generation("Poison_Damage", "Weapon", 2, 1);
+    scr_weapon_prefix_generation("Shock_Damage", "Weapon", 2, 1);
+    scr_weapon_prefix_generation("Caustic_Damage", "Weapon", 2, 1);
+    scr_weapon_prefix_generation("HP", "Armor", 2, 3);
+    scr_weapon_prefix_generation("MP", "Armor", 2, 3);
+    scr_weapon_prefix_generation("Health_Restoration", "Armor", 2, 4);
+    scr_weapon_prefix_generation("MP_Restoration", "Armor", 2, 2);
+    scr_weapon_prefix_generation("Weapon_Damage", "Weapon", 2, 4);
+    scr_weapon_prefix_generation("Armor_Damage", "Weapon", 2, 10);
+    scr_weapon_prefix_generation("Bodypart_Damage", "Weapon", 2, 10);
+    scr_weapon_prefix_generation("Magic_Power", "Weapon", 2, 4);
+    scr_weapon_prefix_generation("Skills_Energy_Cost", "Weapon", 2, -4);
+    scr_weapon_prefix_generation("Spells_Energy_Cost", "Weapon", 2, -4);
+    scr_weapon_prefix_generation("Cooldown_Reduction", "Weapon", 2, -4);
+    scr_weapon_prefix_generation("PRR", "Weapon", 1, 3);
+    scr_weapon_prefix_generation("Block_Power", "all", 1, 3);
+    scr_weapon_prefix_generation("EVS", "Armor", 1, 2);
+    scr_weapon_prefix_generation("CTA", "Weapon", 1, 3);
+    scr_weapon_prefix_generation("Hit_Chance", "Weapon", 1, 2);
+    scr_weapon_prefix_generation("CRT", "Weapon", 1, 3);
+    scr_weapon_prefix_generation("CRTD", "Weapon", 1, 8);
+    scr_weapon_prefix_generation("FMB", "Weapon", 1, -2);
+    scr_weapon_prefix_generation("Armor_Piercing", "Weapon", 1, 4);
+    scr_weapon_prefix_generation("Fortitude", "Armor", 1, 5);
+    scr_weapon_prefix_generation("Healing_Received", "Armor", 1, 10);
+    scr_weapon_prefix_generation("Slashing_Resistance", "Armor", 1, 8);
+    scr_weapon_prefix_generation("Piercing_Resistance", "Armor", 1, 8);
+    scr_weapon_prefix_generation("Blunt_Resistance", "Armor", 1, 8);
+    scr_weapon_prefix_generation("Rending_Resistance", "Armor", 1, 8);
+    scr_weapon_prefix_generation("Unholy_Resistance", "Armor", 1, 8);
+    scr_weapon_prefix_generation("Stun_Resistance", "Armor", 1, 8);
+    scr_weapon_prefix_generation("Knockback_Resistance", "Armor", 1, 8);
+    scr_weapon_prefix_generation("Bleeding_Resistance", "Armor", 1, 8);
+    scr_weapon_prefix_generation("Physical_Resistance", "Armor", 1, 3);
+    scr_weapon_prefix_generation("Nature_Resistance", "Armor", 1, 5);
+    scr_weapon_prefix_generation("Magic_Resistance", "Armor", 1, 5);
+    scr_weapon_prefix_generation("Pain_Resistance", "Armor", 1, 5);
     Common = (1 << 0)
     Uncommon = (2 << 0)
     Rare = (3 << 0)

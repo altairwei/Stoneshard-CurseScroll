@@ -100,81 +100,57 @@ public class CurseScroll : Mod
 
         // Let l'Owcrey sell these scroll
 
-        Msl.LoadGML("gml_Object_o_npc_enchanter_Create_0")
-            .MatchFrom("gold_k = irandom_range(1000, 1500)")
-            .InsertAbove(@"
+        Msl.LoadGML("gml_Object_o_npc_lowcrey_Other_19")
+            .MatchAll()
+            .InsertBelow(@"
 if (scr_dialogue_complete(""cursescroll_ready_to_sell""))
-    ds_list_add(selling_loot_object_persistence, o_inv_scroll_curse, 2)
-Stock_Refill_Time = 48")
+    ds_list_add(selling_loot_object, o_inv_scroll_curse, irandom_range(1, 3))")
             .Save();
 
-        UndertaleGameObject o_trade_inventory = Msl.GetObject("o_trade_inventory");
-        o_trade_inventory.ApplyEvent(ModFiles,
-        new MslEvent("gml_Object_o_trade_inventory_Create_0.gml", EventType.Create, 0),
-            new MslEvent("gml_Object_o_trade_inventory_Other_11.gml", EventType.Other, 11),
-            new MslEvent("gml_Object_o_trade_inventory_Destroy_0.gml", EventType.Destroy, 0)
-        );
+        Msl.LoadGML("gml_Object_o_trade_inventory_Create_0")
+            .MatchAll()
+            .InsertBelow(ModFiles, "gml_Object_o_trade_inventory_Create_0.gml")
+            .Save();
 
-        Msl.LoadGML("gml_Object_o_npc_enchanter_Other_23")
-            .MatchFrom("event_inherited()")
-            .InsertAbove(@"
-var _timestamp = scr_npc_get_global_info(""make_curse_scroll_timestamp"")
-var _daysPassed = scr_timeGetPassed(_timestamp, ""days"")
-if (scr_dsMapFindValue(data, ""num_of_cursed_item"", 0) >= 3 && _daysPassed >= 1 && !scr_dialogue_complete(""cursescroll_ready_to_sell""))
-{
-    ori_dialog_id = dialog_id
-    dialog_id = de2_dialog_open(""curse_scroll_lowcrey.de2"")
-    topic = ""topicScroll""
-    scr_npc_start_dialog()
-}
-")
+        Msl.LoadGML("gml_Object_o_trade_inventory_Other_11")
+            .MatchAll()
+            .InsertBelow(ModFiles, "gml_Object_o_trade_inventory_Other_11.gml")
+            .Save();
+
+        Msl.LoadGML("gml_Object_o_trade_inventory_Destroy_0")
+            .MatchAll()
+            .InsertAbove(ModFiles, "gml_Object_o_trade_inventory_Destroy_0.gml")
             .Save();
 
         Msl.AddFunction(
             name: "scr_curseScroll_lowcreyUpdateInventory",
             codeAsString: @"function scr_curseScroll_lowcreyUpdateInventory()
 {
-    with (o_npc_enchanter)
+    with (o_npc_lowcrey)
     {
-        dialog_id = ori_dialog_id
-
-        is_execute = false
-        var _globalData = scr_globaltile_get(id_name, village_xy[0], village_xy[1])
-        ds_list_clear(ds_map_find_value(_globalData, ""trade_list""))
-        var _timestamp = scr_timeGetTimestamp()
-        scr_npc_set_global_info(""timestamp"", _timestamp)
-
-        ds_list_clear(selling_loot_object_persistence)
-        ds_list_add(selling_loot_object_persistence, o_inv_scroll_curse, 2)
+        scr_npc_restock(true);
+        var _timestamp = scr_timeGetTimestamp();
+        scr_npc_set_global_info(""restock_timestamp"", _timestamp);
     }
 
     scr_dialogue_complete(""cursescroll_ready_to_sell"", true)
     scr_trade_open()
 }");
 
-        // FIXME: work around for `self.every_stock_update()`
-        Msl.LoadAssemblyAsString("scr_curseScroll_lowcreyUpdateInventory")
-            .MatchFrom("call.i ds_list_add(argc=11)")
-            .InsertBelow(@"popz.v
-call.i @@This@@(argc=0)
-push.v builtin.every_stock_update
-callv.v 0")
-            .Save();
-
-        Msl.InjectTableConsumableParameters(
-            metaGroup: Msl.ConsumParamMetaGroup.MAPSSCROLLSBOOKS,
+        Msl.InjectTableItemStats(
             id: "scroll_curse",
-            Cat: Msl.ConsumParamCategory.scroll,
-            Material: Msl.ConsumParamMaterial.paper,
-            Weight: Msl.ConsumParamWeight.Light,
-            tags: Msl.ConsumParamTags.special,
-            Price: 500
+            Price: 500,
+            Cat: Msl.ItemStatsCategory.scroll,
+            Material: Msl.ItemStatsMaterial.paper,
+            Weight: Msl.ItemStatsWeight.Light,
+            tags: Msl.ItemStatsTags.special
+            
         );
 
         // Add Several Curse Scroll to Witch's Container
 
         Msl.LoadGML("gml_Object_o_whitchousecontainer02_Other_10")
-            .MatchFrom("            scr_inventory_add_item(scr_get_scroll(0))")
+            .MatchFrom("scr_inventory_add_item(scr_get_scroll")
             .InsertBelow(@"
         repeat random_range(1, 3)
             scr_inventory_add_item(o_inv_scroll_curse)")
@@ -195,6 +171,7 @@ callv.v 0")
         // Msl.AddNewEvent("o_necromancer_ritualist", "event_inherited()\nscr_loot(o_loot_scroll_curse, x, y, 3)", EventType.Destroy, 0);
         // Msl.AddNewEvent("o_necromancer_wraithbinder", "event_inherited()\nscr_loot(o_loot_scroll_curse, x, y, 3)", EventType.Destroy, 0);
 
+        /*
         Msl.LoadGML("gml_Object_o_proselyte_adept_Destroy_0")
             .MatchAll()
             .InsertBelow("scr_loot(scr_get_scroll(1), x, y, 1)")
@@ -224,47 +201,20 @@ callv.v 0")
             .MatchAll()
             .InsertBelow("scr_loot(o_loot_scroll_curse, x, y, 2.5)")
             .Save();
+        */
 
         Msl.LoadGML("gml_GlobalScript_scr_loot_cabinetCatacombs")
-            .MatchFrom("                    scr_inventory_add_item(choose(3087, 3086, 3085))")
-            .ReplaceBy(@"                {
-                    if scr_chance_value(10)
-                        scr_inventory_add_item(o_inv_scroll_curse)
-                    else
-                        scr_inventory_add_item(choose(o_inv_scroll_disenchant, o_inv_scroll_enchant, o_inv_scroll_identification))
-                }")
-            .MatchFrom("                    scr_inventory_add_item(choose(3087, 3086, 3085))")
-            .ReplaceBy(@"                {
-                    if scr_chance_value(10)
-                        scr_inventory_add_item(o_inv_scroll_curse)
-                    else
-                        scr_inventory_add_item(choose(o_inv_scroll_disenchant, o_inv_scroll_enchant, o_inv_scroll_identification))
-                }")
-            .MatchFrom("                    scr_inventory_add_item(choose(3087, 3086, 3085))")
-            .ReplaceBy(@"                {
-                    if scr_chance_value(10)
-                        scr_inventory_add_item(o_inv_scroll_curse)
-                    else
-                        scr_inventory_add_item(choose(o_inv_scroll_disenchant, o_inv_scroll_enchant, o_inv_scroll_identification))
-                }")
-            .MatchFrom("                    scr_inventory_add_item(choose(3087, 3086, 3085))")
-            .ReplaceBy(@"                {
-                    if scr_chance_value(10)
-                        scr_inventory_add_item(o_inv_scroll_curse)
-                    else
-                        scr_inventory_add_item(choose(o_inv_scroll_disenchant, o_inv_scroll_enchant, o_inv_scroll_identification))
-                }")
-            .MatchFrom("                    scr_inventory_add_item(choose(3087, 3086, 3085))")
-            .ReplaceBy(@"                {
-                    if scr_chance_value(10)
-                        scr_inventory_add_item(o_inv_scroll_curse)
-                    else
-                        scr_inventory_add_item(choose(o_inv_scroll_disenchant, o_inv_scroll_enchant, o_inv_scroll_identification))
-                }")
+            .MatchFrom("scr_inventory_add_item(choose(o_inv_scroll_enchant, o_inv_scroll_identification))")
+            .ReplaceBy(@"{
+                if scr_chance_value(10)
+                    scr_inventory_add_item(o_inv_scroll_curse)
+                else
+                    scr_inventory_add_item(choose(o_inv_scroll_enchant, o_inv_scroll_identification))
+            }")
             .Save();
 
         Msl.LoadGML("gml_GlobalScript_scr_loot_chestRemoteCatacombs")
-            .MatchFrom("        scr_inventory_add_item(choose(3050, 3086))")
+            .MatchFrom("scr_inventory_add_item(choose(o_inv_bottle, o_inv_scroll_enchant))")
             .InsertBelow(@"    if scr_chance_value(10)
         scr_inventory_add_item(o_inv_scroll_curse)")
             .Save();
@@ -275,6 +225,13 @@ callv.v 0")
         Localization.DialogLinesPatching();
         Localization.CurseTextPatching();
         CurseList.CurseFunctionPatching();
+
+        // Patch dialogue
+        Msl.AddNewEvent("o_curse_scrull_initializer", "", EventType.Create, 0);
+        Msl.LoadGML(Msl.EventName("o_curse_scrull_initializer", EventType.Create, 0))
+            .MatchAll()
+            .InsertBelow(ModFiles, "lowcrey_dialog_update.gml")
+            .Save();
 
         // Path text color
         Msl.LoadGML("gml_GlobalScript_scr_colorTextColorsMap")
@@ -287,19 +244,5 @@ callv.v 0")
             .MatchAll()
             .InsertBelow(ModFiles, "generate_cursed_item.gml")
             .Save();
-    }
-
-    private static void ExportTable(string table)
-    {
-        DirectoryInfo dir = new("ModSources/CurseScroll/tmp");
-        if (!dir.Exists) dir.Create();
-        List<string>? lines = ModLoader.GetTable(table);
-        if (lines != null)
-        {
-            File.WriteAllLines(
-                Path.Join(dir.FullName, Path.DirectorySeparatorChar.ToString(), table + ".tsv"),
-                lines.Select(x => string.Join('\t', x.Split(';')))
-            );
-        }
     }
 }
