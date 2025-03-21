@@ -15,7 +15,7 @@ public class CurseScroll : Mod
     public override string Author => "Altair Wei";
     public override string Name => "Curse Scroll";
     public override string Description => "l'Owcrey at the Rotten Willow now sells a scroll that transfers curses.";
-    public override string Version => "1.0.0.0";
+    public override string Version => "1.1.0";
     public override string TargetVersion => "0.8.2.10";
 
     public override void PatchMod()
@@ -156,53 +156,6 @@ if (scr_dialogue_complete(""cursescroll_ready_to_sell""))
             scr_inventory_add_item(o_inv_scroll_curse)")
             .Save();
 
-        // Let some enemies drop cure scrolls
-
-        // Msl.AddNewEvent("o_skeleton_monk", "event_inherited()\nscr_loot(o_loot_scroll_curse, x, y, 1)", EventType.Destroy, 0);
-        // Msl.AddNewEvent("o_skeleton_priest", "event_inherited()\nscr_loot(o_loot_scroll_curse, x, y, 2)", EventType.Destroy, 0);
-        // Msl.AddNewEvent("o_ghast", "event_inherited()\nscr_loot(o_loot_scroll_curse, x, y, 3)", EventType.Destroy, 0);
-        // Msl.AddNewEvent("o_skeleton_highpriest", "event_inherited()\nscr_loot(o_loot_scroll_curse, x, y, 3)", EventType.Destroy, 0);
-        // Msl.AddNewEvent("o_ghast_accursed", "event_inherited()\nscr_loot(o_loot_scroll_curse, x, y, 3)", EventType.Destroy, 0);
-        // Msl.AddNewEvent("o_ghast_elder", "event_inherited()\nscr_loot(o_loot_scroll_curse, x, y, 3)", EventType.Destroy, 0);
-
-        // FIXME: don't touch o_necromancer_boss which will be modified by Necromancy
-        // Msl.AddNewEvent("o_necromancer_boss", "event_inherited()\nscr_loot(o_loot_scroll_curse, x, y, 2)", EventType.Destroy, 0);
-        // Msl.AddNewEvent("o_necromancer_boss_staff", "event_inherited()\nscr_loot(o_loot_scroll_curse, x, y, 2.5)", EventType.Destroy, 0);
-        // Msl.AddNewEvent("o_necromancer_ritualist", "event_inherited()\nscr_loot(o_loot_scroll_curse, x, y, 3)", EventType.Destroy, 0);
-        // Msl.AddNewEvent("o_necromancer_wraithbinder", "event_inherited()\nscr_loot(o_loot_scroll_curse, x, y, 3)", EventType.Destroy, 0);
-
-        /*
-        Msl.LoadGML("gml_Object_o_proselyte_adept_Destroy_0")
-            .MatchAll()
-            .InsertBelow("scr_loot(scr_get_scroll(1), x, y, 1)")
-            .Save();
-
-        Msl.LoadGML("gml_Object_o_proselyte_toller_Destroy_0")
-            .MatchAll()
-            .InsertBelow("scr_loot(scr_get_scroll(1), x, y, 1)")
-            .Save();
-
-        Msl.LoadGML("gml_Object_o_proselyte_hierarch_Destroy_0")
-            .MatchAll()
-            .InsertBelow("scr_loot(o_loot_scroll_curse, x, y, 2)")
-            .Save();
-
-        Msl.LoadGML("gml_Object_o_proselyte_apostate_Destroy_0")
-            .MatchAll()
-            .InsertBelow("scr_loot(o_loot_scroll_curse, x, y, 2.5)")
-            .Save();
-
-        Msl.LoadGML("gml_Object_o_proselyte_abomination_Destroy_0")
-            .MatchAll()
-            .InsertBelow("scr_loot(o_loot_scroll_curse, x, y, 2.5)")
-            .Save();
-
-        Msl.LoadGML("gml_Object_o_proselyte_matriarch_Destroy_0")
-            .MatchAll()
-            .InsertBelow("scr_loot(o_loot_scroll_curse, x, y, 2.5)")
-            .Save();
-        */
-
         Msl.LoadGML("gml_GlobalScript_scr_loot_cabinetCatacombs")
             .MatchFrom("scr_inventory_add_item(choose(o_inv_scroll_enchant, o_inv_scroll_identification))")
             .ReplaceBy(@"{
@@ -240,9 +193,9 @@ if (scr_dialogue_complete(""cursescroll_ready_to_sell""))
             .Save();
 
         // Delete Me!
-        Msl.LoadGML("gml_Object_o_player_KeyPress_115") // F4
-            .MatchAll()
-            .InsertBelow(ModFiles, "generate_cursed_item.gml")
-            .Save();
+        // Msl.LoadGML("gml_Object_o_player_KeyPress_115") // F4
+        //     .MatchAll()
+        //     .InsertBelow(ModFiles, "generate_cursed_item.gml")
+        //     .Save();
     }
 }

@@ -27,6 +27,16 @@ if (_success && _curse_list != noone)
 
         // Absorb the curse from the existed item
         curse_list = __dsDebuggerListCreate()
+
+        /*
+        var _test = ds_map_create()
+        var _test_list = ds_list_create()
+        ds_list_copy(_test_list, _curse_list)
+        ds_map_add_list(_test, "Curse", _test_list)
+        show_message(json_encode(_test))
+        ds_map_destroy(_test)
+        */
+
         ds_list_copy(curse_list, _curse_list)
         ds_map_add_list(data, "Curse", curse_list)
         skill = o_skill_transfer_curse
