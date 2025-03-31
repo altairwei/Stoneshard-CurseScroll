@@ -22,7 +22,7 @@ _Scripts.condition_CND_curseScrollIntro = function()
     {
         var _timestamp = scr_npc_get_global_info("make_curse_scroll_timestamp")
         var _daysPassed = scr_timeGetPassed(_timestamp, 3)
-        return ds_map_find_value_ext(data, "num_of_cursed_item", 0) >= 3
+        return scr_npc_get_global_info("num_of_cursed_item") >= 3
                 && _daysPassed >= 1 && !scr_dialogue_complete("cursescroll_ready_to_sell")
     }
 }

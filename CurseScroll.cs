@@ -156,20 +156,30 @@ if (scr_dialogue_complete(""cursescroll_ready_to_sell""))
             scr_inventory_add_item(o_inv_scroll_curse)")
             .Save();
 
-        Msl.LoadGML("gml_GlobalScript_scr_loot_cabinetCatacombs")
-            .MatchFrom("scr_inventory_add_item(choose(o_inv_scroll_enchant, o_inv_scroll_identification))")
-            .ReplaceBy(@"{
-                if scr_chance_value(10)
-                    scr_inventory_add_item(o_inv_scroll_curse)
-                else
-                    scr_inventory_add_item(choose(o_inv_scroll_enchant, o_inv_scroll_identification))
-            }")
+        // Restore Witch's Curse
+
+        Msl.LoadGML("gml_Object_o_npc_witch_Destroy_0")
+            .MatchFrom("scr_rerrol_item_simple((1 << 0))")
+            .ReplaceBy("scr_rerrol_item_simple((5 << 0))")
             .Save();
 
-        Msl.LoadGML("gml_GlobalScript_scr_loot_chestRemoteCatacombs")
-            .MatchFrom("scr_inventory_add_item(choose(o_inv_bottle, o_inv_scroll_enchant))")
-            .InsertBelow(@"    if scr_chance_value(10)
-        scr_inventory_add_item(o_inv_scroll_curse)")
+        // Improve Cursed Items Chance
+
+        Msl.LoadGML("gml_GlobalScript_scr_weapon_generation")
+            .MatchFrom("if scr_chance_value(10)")
+            .ReplaceBy("                if scr_chance_value(20)")
+            .Save();
+
+        // Make unidentified cursed items visible
+
+        Msl.LoadGML("gml_Object_o_inv_slot_Draw_0")
+            .MatchFrom("var _cursed = (ds_map_find_value_ext(data, \"is_cursed\", false) && (equipped || _identified))")
+            .ReplaceBy("        var _cursed = ds_map_find_value_ext(data, \"is_cursed\", false)")
+            .Save();
+
+        Msl.LoadGML("gml_GlobalScript_scr_qualityBgDraw")
+            .MatchFrom("_quality = ds_map_find_value(data, \"cursedQuality\")")
+            .ReplaceBy("")
             .Save();
 
         // Insert Localization and Curse List

@@ -18,9 +18,9 @@ if (owner.object_index == o_npc_lowcrey)
     {
         if (_current_num_of_cursed_item > _num_of_cursed_item)
         {
-            var _num = ds_map_find_value_ext(data, "num_of_cursed_item", 0)
+            var _num = scr_npc_get_global_info("num_of_cursed_item")
             var _new_num = _num + (_current_num_of_cursed_item - _num_of_cursed_item)
-            ds_map_replace(data, "num_of_cursed_item", _new_num)
+            scr_npc_set_global_info("num_of_cursed_item", _new_num)
             if (_num < 3 && _new_num >= 3)
             {
                 var _timestamp = scr_timeGetTimestamp()

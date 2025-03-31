@@ -30,7 +30,7 @@ public class CurseList
 {
     if (argument_count == 0)
     {
-        scr_curse_add_value(""Miracle_Power"", 15)
+        scr_curse_add_value(""Miracle_Chance"", 10)
         scr_curse_add_value(""Spells_Energy_Cost"", 15)
     }
 }");
@@ -106,6 +106,7 @@ public class CurseList
 
     private static void AddCurseTags()
     {
+        // 过载诅咒：+10%准度-10%精力恢复速度
         AddScript("Curse_of_Nihility");
         AddScript("Curse_of_Craze");
         AddScript("Curse_of_Scabies");

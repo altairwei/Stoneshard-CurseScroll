@@ -10,7 +10,7 @@
 | Curse              | Item Type                  | Positive effect          | Negative effect         |
 | ------------------ | -------------------------- | ------------------------ | ----------------------- |
 | Curse of Nihility  | Weapon, Jewelry, and Armor | -10% Cooldowns Duration  | -10% Health Restoration |
-| Curse of Craze     | Weapon, Jewelry, and Armor | +15% Miracle Potency     | +15% Spells Energy Cost |
+| Curse of Craze     | Weapon, Jewelry, and Armor | +10% Miracle_Chance      | +15% Spells Energy Cost |
 | Curse of Scabies   | Armor                      | +10% Physical Resistance | +20% Skills Energy Cost |
 | Curse of Blindness | Armor                      | +15% Counter Chance      | -1 Vision               |
 | Curse of Thirsty   | Weapon, Jewelry, and Armor | +20% Energy Drain        | +0.04% Thirst Change    |
