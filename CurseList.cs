@@ -90,6 +90,34 @@ public class CurseList
     }
 }");
 
+        Msl.AddFunction(
+            name: "gml_GlobalScript_Curse_of_Inversion",
+            codeAsString: @"function Curse_of_Inversion()
+{
+    if (argument_count == 0)
+    {
+        var types = [
+            [""Fire_Damage"", ""Frost_Resistance""],
+            [""Frost_Damage"", ""Fire_Resistance""],
+            [""Shock_Damage"", ""Shock_Resistance""],
+
+            [""Poison_Damage"", ""Caustic_Resistance""],
+            [""Caustic_Damage"", ""Poison_Resistance""],
+
+            [""Arcane_Damage"", ""Psionic_Resistance""],
+            [""Psionic_Damage"", ""Arcane_Resistance""],
+
+            [""Sacred_Damage"", ""Unholy_Resistance""],
+            [""Unholy_Damage"", ""Sacred_Resistance""]
+        ]
+
+        var choosen = types[irandom_range(0, array_length(types) - 1)]
+
+        scr_curse_add_value(choosen[0], 5)
+        scr_curse_add_value(choosen[1], -10)
+    }
+}");
+
         AddCurseTags();
     }
 
@@ -114,6 +142,7 @@ public class CurseList
         AddScript("Curse_of_Thirsty");
         AddScript("Curse_of_Wrath");
         AddScript("Curse_of_Evermind");
+        AddScript("Curse_of_Inversion");
 
         string txtCurseTags = @"
 if (global.add_new_curses)
@@ -125,6 +154,7 @@ if (global.add_new_curses)
     asset_add_tags(Curse_of_Thirsty, [""curse_eff"", ""Weapon"", ""Jewelry"", ""Armor""], asset_script)
     asset_add_tags(Curse_of_Wrath, [""curse_eff"", ""Weapon"", ""Jewelry"", ""Armor""], asset_script)
     asset_add_tags(Curse_of_Evermind, [""curse_eff"", ""Weapon"", ""Jewelry"", ""Armor""], asset_script)
+    asset_add_tags(Curse_of_Inversion, [""curse_eff"", ""Weapon""], asset_script)
 }
 else
 {
@@ -135,6 +165,7 @@ else
     asset_clear_tags(Curse_of_Thirsty, asset_script)
     asset_clear_tags(Curse_of_Wrath, asset_script)
     asset_clear_tags(Curse_of_Evermind, asset_script)
+    asset_clear_tags(Curse_of_Inversion, asset_script)
 }";
 
         UndertaleGameObject ob = Msl.AddObject("o_curse_scrull_initializer", isPersistent: true);

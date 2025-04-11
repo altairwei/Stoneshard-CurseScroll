@@ -98,9 +98,14 @@ public class Localization
         text_zh = "迷醉诅咒";
         idlist.Add($"{id};{text_en};{text_en};{text_zh};" + string.Concat(Enumerable.Repeat($"{text_en};", 11)));
 
+        id = "Curse_of_Inversion";
+        text_en = "Curse of Inversion";
+        text_zh = "相噬诅咒";
+        idlist.Add($"{id};{text_en};{text_en};{text_zh};" + string.Concat(Enumerable.Repeat($"{text_en};", 11)));
+
         string curse_end = ";" + string.Concat(Enumerable.Repeat("curse_name_end;", 14));
 
-        List<string> curse_table = ModLoader.GetTable("gml_GlobalScript_table_curses");
+        List<string> curse_table = Msl.ThrowIfNull(ModLoader.GetTable("gml_GlobalScript_table_curses"));
         curse_table.InsertRange(curse_table.IndexOf(curse_end), idlist);
         ModLoader.SetTable(curse_table, "gml_GlobalScript_table_curses");
     }
