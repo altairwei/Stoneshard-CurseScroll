@@ -15,8 +15,8 @@ public class CurseScroll : Mod
     public override string Author => "Altair Wei";
     public override string Name => "Curse Scroll";
     public override string Description => "l'Owcrey at the Rotten Willow now sells a scroll that transfers curses.";
-    public override string Version => "1.1.0";
-    public override string TargetVersion => "0.8.2.10";
+    public override string Version => "1.1.1";
+    public override string TargetVersion => "0.9.3.5";
 
     public override void PatchMod()
     {
@@ -137,15 +137,18 @@ if (scr_dialogue_complete(""cursescroll_ready_to_sell""))
     scr_trade_open()
 }");
 
-        Msl.InjectTableItemStats(
-            id: "scroll_curse",
-            Price: 500,
-            Cat: Msl.ItemStatsCategory.scroll,
-            Material: Msl.ItemStatsMaterial.paper,
-            Weight: Msl.ItemStatsWeight.Light,
-            tags: Msl.ItemStatsTags.special
-            
-        );
+        List<string> table = Msl.ThrowIfNull(ModLoader.GetTable("gml_GlobalScript_table_items_stats"));
+        table.Add("scroll_curse;;500;500;;scroll;;paper;Light;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;special;");
+        ModLoader.SetTable(table, "gml_GlobalScript_table_items_stats");
+
+        // Msl.InjectTableItemStats(
+        //     id: "scroll_curse",
+        //     Price: 500,
+        //     Cat: Msl.ItemStatsCategory.scroll,
+        //     Material: Msl.ItemStatsMaterial.paper,
+        //     Weight: Msl.ItemStatsWeight.Light,
+        //     tags: Msl.ItemStatsTags.special
+        // );
 
         // Add Several Curse Scroll to Witch's Container
 
@@ -190,11 +193,16 @@ if (scr_dialogue_complete(""cursescroll_ready_to_sell""))
         CurseList.CurseFunctionPatching();
 
         // Patch dialogue
-        Msl.AddNewEvent("o_curse_scrull_initializer", "", EventType.Create, 0);
-        Msl.LoadGML(Msl.EventName("o_curse_scrull_initializer", EventType.Create, 0))
+        Msl.AddNewEvent("o_curse_scrull_initializer", "", EventType.Other, 10);
+        Msl.LoadGML(Msl.EventName("o_curse_scrull_initializer", EventType.Other, 10))
             .MatchAll()
             .InsertBelow(ModFiles, "lowcrey_dialog_update.gml")
             .Save();
+        Msl.LoadGML("gml_Object_o_dataLoader_Other_10")
+            .MatchFrom("scr_dialogue_loader_init")
+            .InsertBelow("with (o_curse_scrull_initializer) { event_user(0) }")
+            .Save();
+
 
         // Path text color
         Msl.LoadGML("gml_GlobalScript_scr_colorTextColorsMap")

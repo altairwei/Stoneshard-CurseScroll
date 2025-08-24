@@ -1,6 +1,6 @@
-var _Fragments = variable_struct_get(global.DialogueData_val.willow_lowcrey, "Fragments")
-var _Scripts = variable_struct_get(global.DialogueData_val.willow_lowcrey, "Scripts")
-var _Specs = variable_struct_get(global.DialogueData_val.willow_lowcrey, "Specs")
+var _Fragments = variable_struct_get(global.__dialogue_flow_data.willow_lowcrey, "Fragments")
+var _Scripts = variable_struct_get(global.__dialogue_flow_data.willow_lowcrey, "Scripts")
+var _Specs = variable_struct_get(global.__dialogue_flow_data.willow_lowcrey, "Specs")
 
 _Fragments.HUB_Cnd_6E9D167C_negative = "condition_CND_curseScrollIntro"
 _Fragments.condition_CND_curseScrollIntro = ["Cnd_curseScrollIntro_positive", "Cnd_curseScrollIntro_negative"]
