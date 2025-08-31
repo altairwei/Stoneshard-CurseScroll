@@ -15,7 +15,7 @@ public class CurseScroll : Mod
     public override string Author => "Altair Wei";
     public override string Name => "Curse Scroll";
     public override string Description => "l'Owcrey at the Rotten Willow now sells a scroll that transfers curses.";
-    public override string Version => "1.1.1";
+    public override string Version => "1.1.2";
     public override string TargetVersion => "0.9.3.5";
 
     public override void PatchMod()
@@ -166,12 +166,19 @@ if (scr_dialogue_complete(""cursescroll_ready_to_sell""))
             .ReplaceBy("scr_rerrol_item_simple((5 << 0))")
             .Save();
 
-        // Improve Cursed Items Chance
+        try
+        {
+                    // Improve Cursed Items Chance
+            Msl.LoadGML("gml_GlobalScript_scr_weapon_generation")
+                .MatchFrom("if scr_chance_value(10)")
+                .ReplaceBy("                if scr_chance_value(20)")
+                .Save();
+        }
+        catch (System.Exception)
+        {
+            // Compatible with Better Enchantments
+        }
 
-        Msl.LoadGML("gml_GlobalScript_scr_weapon_generation")
-            .MatchFrom("if scr_chance_value(10)")
-            .ReplaceBy("                if scr_chance_value(20)")
-            .Save();
 
         // Make unidentified cursed items visible
 
